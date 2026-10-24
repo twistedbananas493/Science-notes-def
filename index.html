@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-900 text-slate-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arcade Hub - Unblocked Games Hub</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Font Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#312e81',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+    </style>
+</head>
+<body class="h-full flex flex-col font-sans antialiased overflow-x-hidden selection:bg-brand-500 selection:text-white">
+
+    <!-- Top Navigation Bar -->
+    <header class="sticky top-0 z-30 bg-slate-800/90 backdrop-blur border-b border-slate-700/80 px-4 lg:px-8 py-3 transition-all">
+        <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
+            
+            <!-- Logo & Title -->
+            <div class="flex items-center gap-3 cursor-pointer" onclick="navigateToHome()">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center shadow-lg shadow-indigo-500/20 p-1.5">
+                    <!-- Rhinoceros Head Vector Icon -->
+                    <svg class="w-full h-full text-white fill-current" viewBox="0 0 512 512">
+                        <path d="M496 224c-13.3 0-24 10.7-24 24v16c0 13.3-10.7 24-24 24h-16c-4.4 0-8 3.6-8 8v16c0 13.3-10.7 24-24 24h-18.7c-8.5 0-16.6-3.4-22.6-9.4l-18.7-18.7c-6-6-14.1-9.4-22.6-9.4H280c-13.3 0-24-10.7-24-24v-16c0-13.3 10.7-24 24-24h16c8.8 0 16-7.2 16-16s-7.2-16-16-16h-16c-30.9 0-56 25.1-56 56v8h-32v-24c0-13.3-10.7-24-24-24h-16c-13.3 0-24 10.7-24 24v24H96c-17.7 0-32 14.3-32 32v128c0 17.7 14.3 32 32 32h16v32c0 17.7 14.3 32 32 32h32c17.7 0 32-14.3 32-32v-32h128v32c0 17.7 14.3 32 32 32h32c17.7 0 32-14.3 32-32v-32h16c17.7 0 32-14.3 32-32V248c0-13.3-10.7-24-24-24zM160 200c8.8 0 16 7.2 16 16s-7.2 16-16 16-16-7.2-16-16 7.2-16 16-16zm256 120c-13.3 0-24-10.7-24-24s10.7-24 24-24 24 10.7 24 24-10.7 24-24 24z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="font-extrabold text-lg tracking-tight text-white leading-none">ARCADE<span class="text-brand-500">HUB</span></h1>
+                    <p class="text-[10px] font-medium text-slate-400 tracking-wider uppercase">Unblocked Games Manager</p>
+                </div>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="flex-1 max-w-md mx-4">
+                <div class="relative">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                    <input 
+                        type="text" 
+                        id="searchInput"
+                        oninput="handleSearch()"
+                        placeholder="Search games, categories..." 
+                        class="w-full bg-slate-900/80 border border-slate-700 text-slate-200 text-sm rounded-xl pl-10 pr-4 py-2 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all placeholder:text-slate-500"
+                    >
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex items-center gap-2">
+                <button 
+                    onclick="showFavoritesOnly()" 
+                    id="favToggleBtn"
+                    class="px-3 py-2 rounded-xl bg-slate-700/50 hover:bg-slate-700 border border-slate-600/50 text-slate-300 text-sm font-medium flex items-center gap-2 transition-all"
+                    title="View Saved Favorites"
+                >
+                    <i class="fa-solid fa-heart text-rose-500"></i>
+                    <span class="hidden sm:inline">Saved</span>
+                </button>
+                <button 
+                    onclick="toggleAddGameModal(true)" 
+                    class="px-3.5 py-2 rounded-xl bg-brand-600 hover:bg-brand-500 text-white text-sm font-semibold shadow-md shadow-brand-600/20 flex items-center gap-2 transition-all"
+                >
+                    <i class="fa-solid fa-plus"></i>
+                    <span class="hidden sm:inline">Add Game</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 flex flex-col gap-6">
+
+        <!-- Category Filter Tags -->
+        <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none" id="categoryContainer">
+            <!-- Populated via JS -->
+        </div>
+
+        <!-- Catalog Section -->
+        <section id="catalogSection" class="flex-1 flex flex-col gap-4">
+            <div class="flex justify-between items-center">
+                <h2 id="catalogTitle" class="text-xl font-bold text-slate-100 flex items-center gap-2">
+                    <i class="fa-solid fa-gamepad text-indigo-400"></i> Game Catalog
+                </h2>
+                <span id="gameCount" class="text-xs font-semibold px-2.5 py-1 rounded-full bg-slate-800 border border-slate-700 text-slate-400">
+                    0 Items
+                </span>
+            </div>
+
+            <!-- Cards Grid -->
+            <div id="gamesGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+                <!-- Populated via JS -->
+            </div>
+
+            <!-- Empty State -->
+            <div id="emptyState" class="hidden flex-1 flex flex-col items-center justify-center py-16 text-center">
+                <div class="w-16 h-16 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-500 text-2xl mb-4">
+                    <i class="fa-solid fa-ghost"></i>
+                </div>
+                <h3 class="text-lg font-semibold text-slate-300 mb-1">No Games Found</h3>
+                <p class="text-slate-500 text-sm max-w-sm">No games match your current filter. Click "Add Game" above to add any new game embed URL.</p>
+                <button onclick="toggleAddGameModal(true)" class="mt-4 px-4 py-2 bg-brand-600 hover:bg-brand-500 text-white rounded-xl text-xs font-semibold shadow-md transition-all">
+                    Add Custom Game
+                </button>
+            </div>
+        </section>
+
+        <!-- Player Section -->
+        <section id="playerSection" class="hidden flex-1 flex flex-col gap-4">
+            <div class="flex flex-wrap items-center justify-between gap-3 bg-slate-800/80 p-3 sm:p-4 rounded-2xl border border-slate-700/80">
+                <div class="flex items-center gap-3">
+                    <button 
+                        onclick="navigateToHome()" 
+                        class="p-2.5 rounded-xl bg-slate-700/60 hover:bg-slate-700 text-slate-200 transition-all text-sm flex items-center justify-center"
+                        title="Back to catalog"
+                    >
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <div>
+                        <h2 id="activeGameTitle" class="font-bold text-base sm:text-lg text-white leading-tight">Game Title</h2>
+                        <span id="activeGameCategory" class="text-xs text-brand-500 font-medium">Category</span>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <button 
+                        id="playerFavBtn"
+                        onclick="toggleFavoriteActive()" 
+                        class="p-2.5 rounded-xl bg-slate-700/60 hover:bg-slate-700 text-slate-300 hover:text-rose-500 transition-all text-sm"
+                        title="Bookmark Game"
+                    >
+                        <i class="fa-regular fa-heart"></i>
+                    </button>
+                    <button 
+                        onclick="reloadIframe()" 
+                        class="p-2.5 rounded-xl bg-slate-700/60 hover:bg-slate-700 text-slate-300 transition-all text-sm"
+                        title="Reload Game"
+                    >
+                        <i class="fa-solid fa-rotate-right"></i>
+                    </button>
+                    <button 
+                        onclick="openInNewTab()" 
+                        class="p-2.5 rounded-xl bg-slate-700/60 hover:bg-slate-700 text-slate-300 transition-all text-sm"
+                        title="Open Source URL"
+                    >
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </button>
+                    <button 
+                        onclick="toggleFullscreen()" 
+                        class="px-3 py-2 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-semibold text-xs flex items-center gap-2 transition-all"
+                    >
+                        <i class="fa-solid fa-expand"></i>
+                        <span class="hidden sm:inline">Fullscreen</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Frame Container -->
+            <div id="iframeWrapper" class="relative w-full aspect-video bg-black rounded-2xl border border-slate-800 overflow-hidden shadow-2xl flex items-center justify-center min-h-[400px]">
+                <div id="iframeLoader" class="absolute inset-0 flex flex-col items-center justify-center bg-slate-950/90 z-10 gap-3 text-slate-400">
+                    <i class="fa-solid fa-circle-notch fa-spin text-3xl text-brand-500"></i>
+                    <p class="text-xs font-medium tracking-wide">Loading Unblocked Embed...</p>
+                </div>
+
+                <iframe 
+                    id="gameIframe" 
+                    src="" 
+                    class="w-full h-full border-0 relative z-0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; gamepad"
+                    allowfullscreen
+                    onload="hideIframeLoader()"
+                ></iframe>
+            </div>
+
+            <!-- Description Card -->
+            <div class="bg-slate-800/40 border border-slate-800 rounded-2xl p-4 sm:p-5 flex flex-col gap-2">
+                <h3 class="text-sm font-semibold text-slate-300">About this Game</h3>
+                <p id="activeGameDescription" class="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                    Game description...
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-auto border-t border-slate-800 bg-slate-950 py-6 px-4 text-center text-xs text-slate-500">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p>© 2026 ArcadeHub. Custom iframe games hub.</p>
+            <div class="flex items-center gap-4 text-slate-400">
+                <span class="flex items-center gap-1.5"><i class="fa-solid fa-gamepad text-indigo-500"></i> Custom Embeds</span>
+                <span class="flex items-center gap-1.5"><i class="fa-solid fa-bolt text-amber-500"></i> Google Cloud Storage</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ADD GAME MODAL -->
+    <div id="addGameModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-slate-800 border border-slate-700 rounded-2xl w-full max-w-md p-6 shadow-2xl relative flex flex-col gap-5">
+            <div class="flex justify-between items-center border-b border-slate-700/60 pb-3">
+                <h3 class="font-bold text-slate-100 text-lg flex items-center gap-2">
+                    <i class="fa-solid fa-plus-circle text-brand-500"></i> Add Custom Game
+                </h3>
+                <button onclick="toggleAddGameModal(false)" class="text-slate-400 hover:text-white transition-all text-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <form id="addGameForm" onsubmit="handleAddGameForm(event)" class="flex flex-col gap-4 text-xs sm:text-sm">
+                <div>
+                    <label class="block text-slate-300 font-medium mb-1.5">Game Title *</label>
+                    <input type="text" id="inputTitle" required placeholder="e.g. Slope" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-slate-200 focus:outline-none focus:border-brand-500">
+                </div>
+
+                <div>
+                    <label class="block text-slate-300 font-medium mb-1.5">Category *</label>
+                    <select id="inputCategory" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-slate-200 focus:outline-none focus:border-brand-500">
+                        <option value="Action">Action</option>
+                        <option value="Arcade">Arcade</option>
+                        <option value="Casual">Casual</option>
+                        <option value="Driving">Driving</option>
+                        <option value="Horror">Horror</option>
+                        <option value="Puzzle">Puzzle</option>
+                        <option value="Sports">Sports</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-slate-300 font-medium mb-1.5">Iframe Embed URL *</label>
+                    <input type="url" id="inputUrl" required placeholder="https://storage.googleapis.com/..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-slate-200 focus:outline-none focus:border-brand-500">
+                </div>
+
+                <div>
+                    <label class="block text-slate-300 font-medium mb-1.5">Thumbnail Image URL</label>
+                    <input type="url" id="inputThumb" placeholder="https://example.com/thumb.jpg (Optional)" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-slate-200 focus:outline-none focus:border-brand-500">
+                </div>
+
+                <div>
+                    <label class="block text-slate-300 font-medium mb-1.5">Short Description</label>
+                    <textarea id="inputDesc" rows="2" placeholder="Brief description of the game..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-slate-200 focus:outline-none focus:border-brand-500"></textarea>
+                </div>
+
+                <div class="flex gap-3 pt-2">
+                    <button type="button" onclick="toggleAddGameModal(false)" class="flex-1 py-2.5 rounded-xl bg-slate-700 hover:bg-slate-600 font-medium text-slate-200 transition-all">Cancel</button>
+                    <button type="submit" class="flex-1 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-500 font-semibold text-white transition-all shadow-md shadow-brand-600/20">Save Entry</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-slate-800 border border-slate-700 text-slate-100 px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3">
+        <i id="toastIcon" class="fa-solid fa-circle-check text-emerald-400"></i>
+        <span id="toastMsg" class="text-xs font-medium">Notification message</span>
+    </div>
+
+    <!-- JAVASCRIPT APP LOGIC -->
+    <script>
+        /**
+         * DEFAULT DUCKMATH & UNBLOCKED GAMES DATABASE
+         */
+        const DEFAULT_GAMES_DATABASE = [
+            {
+                id: "game-crazy-cattle-3d",
+                title: "Crazy Cattle 3D",
+                category: "Action",
+                iframeUrl: "https://crashvqurt.github.io/the/newgames/crazycattle3D.html",
+                thumbnail: "https://placehold.co/600x400/15803d/ffffff?text=Crazy+Cattle+3D",
+                description: "Fun 3D physics arcade game with crazy cows and obstacles!"
+            },
+            {
+                id: "game-polytrack",
+                title: "Polytrack",
+                category: "Driving",
+                iframeUrl: "https://crashvqurt.github.io/the/polytrack.html",
+                thumbnail: "https://placehold.co/600x400/0369a1/ffffff?text=Polytrack",
+                description: "Low-poly high-speed racing and track builder game!"
+            },
+            {
+                id: "game-bloxorz",
+                title: "Bloxorz",
+                category: "Puzzle",
+                iframeUrl: "https://crashvqurt.github.io/the/newgames/bloxorz.html",
+                thumbnail: "https://placehold.co/600x400/b45309/ffffff?text=Bloxorz",
+                description: "Roll the 3D block to fall into the square hole in this classic logic puzzle."
+            },
+            {
+                id: "game-eaglercraft",
+                title: "Eaglercraft 1.8 (Minecraft)",
+                category: "Action",
+                iframeUrl: "https://crashvqurt.github.io/the/eaglercraft26-2.html",
+                thumbnail: "https://placehold.co/600x400/047857/ffffff?text=Eaglercraft+Minecraft",
+                description: "Full WebGL browser edition of Minecraft! Build, survive, and explore blocks."
+            },
+            {
+                id: "game-boxing-random",
+                title: "Boxing Random",
+                category: "Sports",
+                iframeUrl: "https://crashvqurt.github.io/the/newgames/boxingrandom.htm",
+                thumbnail: "https://placehold.co/600x400/be123c/ffffff?text=Boxing+Random",
+                description: "Hilarous ragdoll physics 2-player boxing game with changing fields!"
+            },
+            {
+                id: "game-red-ball-4",
+                title: "Red Ball 4 Vol. 1",
+                category: "Arcade",
+                iframeUrl: "https://crashvqurt.github.io/the/redball4vol1.html",
+                thumbnail: "https://placehold.co/600x400/dc2626/ffffff?text=Red+Ball+4",
+                description: "Roll, jump, and defeat evil square monsters to save the world!"
+            },
+            {
+                id: "game-pou",
+                title: "Pou",
+                category: "Casual",
+                iframeUrl: "https://crashvqurt.github.io/the/pou.html",
+                thumbnail: "https://placehold.co/600x400/854d0e/ffffff?text=Pou",
+                description: "Feed, clean, and play mini-games with your virtual alien pet Pou!"
+            },
+            {
+                id: "game-2048",
+                title: "2048",
+                category: "Puzzle",
+                iframeUrl: "https://crashvqurt.github.io/the/2048/index.html",
+                thumbnail: "https://placehold.co/600x400/ea580c/ffffff?text=2048+Puzzle",
+                description: "Slide matching numbered tiles together to reach the legendary 2048 tile!"
+            },
+            {
+                id: "crossword-puzzle",
+                title: "Daily Crossword",
+                category: "Puzzle",
+                iframeUrl: "https://storage.googleapis.com/mathlessons/duckmath.svg#/class/crossword",
+                thumbnail: "https://placehold.co/600x400/0284c7/ffffff?text=Crossword+Puzzle",
+                description: "Test your word knowledge and solve daily word puzzle clues!"
+            },
+            {
+                id: "word-search",
+                title: "Word Search",
+                category: "Puzzle",
+                iframeUrl: "https://storage.googleapis.com/mathlessons/duckmath.svg#/class/word-search",
+                thumbnail: "https://placehold.co/600x400/0d9488/ffffff?text=Word+Search",
+                description: "Find all hidden words in the letter grid before time runs out."
+            },
+            {
+                id: "ragdoll-archers",
+                title: "Ragdoll Archers",
+                category: "Action",
+                iframeUrl: "https://storage.googleapis.com/mathlessons/duckmath.svg#/class/ragdoll-archers",
+                thumbnail: "https://placehold.co/600x400/1e1b4b/38bdf8?text=Ragdoll+Archers",
+                description: "Shoot arrows, battle stickmen, and upgrade your archer in this physics ragdoll game!"
+            },
+            {
+                id: "madalin-stunt-cars-pro",
+                title: "Madalin Stunt Cars Pro",
+                category: "Driving",
+                iframeUrl: "https://storage.googleapis.com/mathlessons/duckmath.svg#/class/madalin-stunt-cars-pro",
+                thumbnail: "https://placehold.co/600x400/312e81/ffffff?text=Madalin+Stunt+Cars",
+                description: "Drive supercar sports cars on huge stunt tracks with ramps and loops!"
+            },
+            {
+                id: "real-flight-simulator",
+                title: "Real Flight Simulator",
+                category: "Driving",
+                iframeUrl: "https://storage.googleapis.com/mathlessons/duckmath.svg#/class/real-flight-simulator",
+                thumbnail: "https://placehold.co/600x400/0f172a/60a5fa?text=Real+Flight+Simulator",
+                description: "Pilot airplanes through realistic skies and complete flight challenges."
+            },
+            {
+                id: "granny-google",
+                title: "Granny",
+                category: "Horror",
+                iframeUrl: "https://storage.googleapis.com/mathlessons/duckmath.svg#/class/granny",
+                thumbnail: "https://placehold.co/600x400/1e1b4b/f43f5e?text=Granny",
+                description: "Escape the house quietly without alerting Granny. Hosted on Google Cloud Storage!"
+            },
+            {
+                id: "drift-boss",
+                title: "Drift Boss",
+                category: "Driving",
+                iframeUrl: "https://crashvqurt.github.io/the/newgames/driftboss.htm",
+                thumbnail: "https://placehold.co/600x400/312e81/a855f7?text=Drift+Boss",
+                description: "Time your turns, drift around tight corners, and survive the high platform tracks!"
+            },
+            {
+                id: "slope",
+                title: "Slope",
+                category: "Arcade",
+                iframeUrl: "https://storage.googleapis.com/mathlessons/duckmath.svg#/class/slope",
+                thumbnail: "https://placehold.co/600x400/064e3b/34d399?text=Slope",
+                description: "Guide a ball down an endless 3D neon downhill track at insane speeds!"
+            },
+            {
+                id: "subway-surfers",
+                title: "Subway Surfers",
+                category: "Casual",
+                iframeUrl: "https://storage.googleapis.com/mathlessons/duckmath.svg#/class/subway-runner-barcelona",
+                thumbnail: "https://placehold.co/600x400/7c2d12/fb923c?text=Subway+Surfers",
+                description: "Dash along train tracks, dodge obstacles, and collect coins in this endless runner."
+            }
+        ];
+
+        let gamesData = [];
+        let favorites = [];
+        let selectedCategory = "All";
+        let searchQuery = "";
+        let showingFavoritesOnly = false;
+        let activeGame = null;
+
+        document.addEventListener("DOMContentLoaded", () => {
+            initGameDatabase();
+            loadFavoritesFromStorage();
+            renderCategoryFilterButtons();
+            renderCatalog();
+        });
+
+        function initGameDatabase() {
+            const storedGames = localStorage.getItem("arcade_hub_games");
+            if (storedGames) {
+                try {
+                    gamesData = JSON.parse(storedGames);
+                    DEFAULT_GAMES_DATABASE.forEach(defGame => {
+                        const index = gamesData.findIndex(g => g.id === defGame.id);
+                        if (index === -1) {
+                            gamesData.push(defGame);
+                        } else {
+                            gamesData[index].iframeUrl = defGame.iframeUrl;
+                        }
+                    });
+                } catch(e) {
+                    gamesData = DEFAULT_GAMES_DATABASE;
+                }
+            } else {
+                gamesData = DEFAULT_GAMES_DATABASE;
+            }
+            saveGamesToStorage();
+        }
+
+        function saveGamesToStorage() {
+            localStorage.setItem("arcade_hub_games", JSON.stringify(gamesData));
+        }
+
+        function loadFavoritesFromStorage() {
+            const saved = localStorage.getItem("arcade_hub_favs");
+            if (saved) {
+                try { favorites = JSON.parse(saved); } catch(e) { favorites = []; }
+            }
+        }
+
+        function saveFavoritesToStorage() {
+            localStorage.setItem("arcade_hub_favs", JSON.stringify(favorites));
+        }
+
+        function renderCategoryFilterButtons() {
+            const categories = ["All", ...new Set(gamesData.map(g => g.category))];
+            const container = document.getElementById("categoryContainer");
+            
+            container.innerHTML = categories.map(cat => {
+                const isActive = selectedCategory === cat && !showingFavoritesOnly;
+                return `
+                    <button 
+                        onclick="setCategory('${cat}')" 
+                        class="px-4 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all border ${
+                            isActive 
+                            ? 'bg-brand-600 border-brand-500 text-white shadow-md shadow-brand-600/20' 
+                            : 'bg-slate-800/80 border-slate-700/80 text-slate-400 hover:text-slate-200 hover:bg-slate-700/50'
+                        }"
+                    >
+                        ${cat === 'All' ? '<i class="fa-solid fa-shapes mr-1.5"></i>' : ''}${cat}
+                    </button>
+                `;
+            }).join('');
+        }
+
+        function renderCatalog() {
+            const grid = document.getElementById("gamesGrid");
+            const emptyState = document.getElementById("emptyState");
+            const catalogTitle = document.getElementById("catalogTitle");
+            
+            let filtered = gamesData.filter(game => {
+                const matchesCategory = (selectedCategory === "All") || (game.category === selectedCategory);
+                const matchesSearch = game.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                      game.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                      (game.description && game.description.toLowerCase().includes(searchQuery.toLowerCase()));
+                const matchesFav = showingFavoritesOnly ? favorites.includes(game.id) : true;
+
+                return matchesCategory && matchesSearch && matchesFav;
+            });
+
+            document.getElementById("gameCount").innerText = `${filtered.length} Items`;
+
+            if (showingFavoritesOnly) {
+                catalogTitle.innerHTML = `<i class="fa-solid fa-heart text-rose-500"></i> Saved Favorites`;
+            } else if (selectedCategory !== "All") {
+                catalogTitle.innerHTML = `<i class="fa-solid fa-folder-open text-brand-500"></i> ${selectedCategory} Games`;
+            } else {
+                catalogTitle.innerHTML = `<i class="fa-solid fa-gamepad text-indigo-400"></i> Game Catalog`;
+            }
+
+            if (filtered.length === 0) {
+                grid.innerHTML = "";
+                emptyState.classList.remove("hidden");
+                return;
+            }
+
+            emptyState.classList.add("hidden");
+
+            grid.innerHTML = filtered.map(game => {
+                const isFav = favorites.includes(game.id);
+                const thumbUrl = game.thumbnail || `https://placehold.co/600x400/312e81/ffffff?text=${encodeURIComponent(game.title)}`;
+
+                return `
+                    <div class="group relative bg-slate-800/70 border border-slate-700/60 hover:border-slate-600 rounded-2xl overflow-hidden shadow-lg transition-all duration-300 hover:-translate-y-1 flex flex-col">
+                        <div class="relative aspect-video w-full overflow-hidden bg-slate-900">
+                            <img 
+                                src="${thumbUrl}" 
+                                alt="${game.title}" 
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                onerror="this.src='https://placehold.co/600x400/0f172a/94a3b8?text=Game+Embed'"
+                            />
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-60"></div>
+                            
+                            <button 
+                                onclick="event.stopPropagation(); toggleFavorite('${game.id}')"
+                                class="absolute top-2.5 right-2.5 w-8 h-8 rounded-full bg-slate-900/80 backdrop-blur border border-slate-700/80 flex items-center justify-center text-slate-300 hover:text-rose-500 transition-all z-10"
+                                title="${isFav ? 'Remove Favorite' : 'Save Favorite'}"
+                            >
+                                <i class="${isFav ? 'fa-solid fa-heart text-rose-500' : 'fa-regular fa-heart'}"></i>
+                            </button>
+
+                            <span class="absolute bottom-2.5 left-2.5 px-2 py-0.5 rounded-lg bg-slate-900/80 backdrop-blur border border-slate-700/60 text-[10px] font-semibold text-brand-400">
+                                ${game.category}
+                            </span>
+                        </div>
+
+                        <div class="p-4 flex-1 flex flex-col justify-between gap-3">
+                            <div>
+                                <h3 class="font-bold text-slate-100 text-sm group-hover:text-brand-400 transition-colors line-clamp-1">${game.title}</h3>
+                                <p class="text-slate-400 text-xs mt-1 line-clamp-2 leading-relaxed">${game.description || 'Click play to launch this embed.'}</p>
+                            </div>
+
+                            <button 
+                                onclick="launchGame('${game.id}')"
+                                class="w-full py-2 px-3 rounded-xl bg-slate-700/60 hover:bg-brand-600 text-slate-200 hover:text-white font-semibold text-xs transition-all flex items-center justify-center gap-2 group-hover:shadow-md group-hover:shadow-brand-600/20"
+                            >
+                                <i class="fa-solid fa-play text-[10px]"></i> Play Game
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function setCategory(cat) {
+            selectedCategory = cat;
+            showingFavoritesOnly = false;
+            updateFavBtnStyle();
+            renderCategoryFilterButtons();
+            renderCatalog();
+        }
+
+        function handleSearch() {
+            searchQuery = document.getElementById("searchInput").value;
+            renderCatalog();
+        }
+
+        function showFavoritesOnly() {
+            showingFavoritesOnly = !showingFavoritesOnly;
+            updateFavBtnStyle();
+            renderCategoryFilterButtons();
+            renderCatalog();
+        }
+
+        function updateFavBtnStyle() {
+            const btn = document.getElementById("favToggleBtn");
+            if (showingFavoritesOnly) {
+                btn.classList.add("bg-rose-500/20", "border-rose-500/50", "text-rose-300");
+            } else {
+                btn.classList.remove("bg-rose-500/20", "border-rose-500/50", "text-rose-300");
+            }
+        }
+
+        function launchGame(gameId) {
+            const game = gamesData.find(g => g.id === gameId);
+            if (!game) return;
+
+            activeGame = game;
+
+            document.getElementById("catalogSection").classList.add("hidden");
+            document.getElementById("playerSection").classList.remove("hidden");
+
+            document.getElementById("activeGameTitle").innerText = game.title;
+            document.getElementById("activeGameCategory").innerText = game.category;
+            document.getElementById("activeGameDescription").innerText = game.description || "No description provided.";
+            
+            document.getElementById("iframeLoader").classList.remove("hidden");
+            document.getElementById("gameIframe").src = game.iframeUrl;
+
+            updatePlayerFavButton();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function navigateToHome() {
+            document.getElementById("playerSection").classList.add("hidden");
+            document.getElementById("catalogSection").classList.remove("hidden");
+            document.getElementById("gameIframe").src = "";
+            activeGame = null;
+        }
+
+        function hideIframeLoader() {
+            document.getElementById("iframeLoader").classList.add("hidden");
+        }
+
+        function reloadIframe() {
+            if (activeGame) {
+                document.getElementById("iframeLoader").classList.remove("hidden");
+                document.getElementById("gameIframe").src = activeGame.iframeUrl;
+            }
+        }
+
+        function openInNewTab() {
+            if (activeGame) {
+                window.open(activeGame.iframeUrl, '_blank');
+            }
+        }
+
+        function toggleFullscreen() {
+            const wrapper = document.getElementById("iframeWrapper");
+            if (!document.fullscreenElement) {
+                if (wrapper.requestFullscreen) wrapper.requestFullscreen();
+                else if (wrapper.webkitRequestFullscreen) wrapper.webkitRequestFullscreen();
+            } else {
+                if (document.exitFullscreen) document.exitFullscreen();
+            }
+        }
+
+        function toggleFavorite(id) {
+            if (favorites.includes(id)) {
+                favorites = favorites.filter(favId => favId !== id);
+                showToast("Removed from favorites", "info");
+            } else {
+                favorites.push(id);
+                showToast("Added to favorites!", "success");
+            }
+            saveFavoritesToStorage();
+            renderCatalog();
+            if (activeGame && activeGame.id === id) updatePlayerFavButton();
+        }
+
+        function toggleFavoriteActive() {
+            if (activeGame) {
+                toggleFavorite(activeGame.id);
+            }
+        }
+
+        function updatePlayerFavButton() {
+            if (!activeGame) return;
+            const btn = document.getElementById("playerFavBtn");
+            const isFav = favorites.includes(activeGame.id);
+            btn.innerHTML = `<i class="${isFav ? 'fa-solid fa-heart text-rose-500' : 'fa-regular fa-heart'}"></i>`;
+        }
+
+        function toggleAddGameModal(show) {
+            const modal = document.getElementById("addGameModal");
+            if (show) {
+                modal.classList.remove("hidden");
+            } else {
+                modal.classList.add("hidden");
+                document.getElementById("addGameForm").reset();
+            }
+        }
+
+        function handleAddGameForm(event) {
+            event.preventDefault();
+            
+            const title = document.getElementById("inputTitle").value.trim();
+            const category = document.getElementById("inputCategory").value;
+            const iframeUrl = document.getElementById("inputUrl").value.trim();
+            const thumbnail = document.getElementById("inputThumb").value.trim();
+            const description = document.getElementById("inputDesc").value.trim();
+
+            const newGame = {
+                id: "game-" + Date.now(),
+                title,
+                category,
+                iframeUrl,
+                thumbnail: thumbnail || `https://placehold.co/600x400/312e81/ffffff?text=${encodeURIComponent(title)}`,
+                description: description || "Custom game embed."
+            };
+
+            gamesData.unshift(newGame);
+            saveGamesToStorage();
+            renderCategoryFilterButtons();
+            renderCatalog();
+            toggleAddGameModal(false);
+
+            showToast("Game added successfully!", "success");
+        }
+
+        function showToast(message, type = "success") {
+            const toast = document.getElementById("toast");
+            const toastMsg = document.getElementById("toastMsg");
+            const toastIcon = document.getElementById("toastIcon");
+
+            toastMsg.innerText = message;
+            
+            if (type === "success") {
+                toastIcon.className = "fa-solid fa-circle-check text-emerald-400";
+            } else {
+                toastIcon.className = "fa-solid fa-circle-info text-sky-400";
+            }
+
+            toast.classList.remove("translate-y-20", "opacity-0");
+            
+            setTimeout(() => {
+                toast.classList.add("translate-y-20", "opacity-0");
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
